@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <link rel="stylesheet" href="style.css" type="text/css"/>
+
+        <meta charset="UTF-8">
+        <script src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.6/dist/htmx.js" integrity="sha384-ksKjJrwjL5VxqAkAZAVOPXvMkwAykMaNYegdixAESVr+KqLkKE8XBDoZuwyWVUDv" crossorigin="anonymous"></script>
+
+        <title>REST API Client</title>
+         <link rel="stylesheet" type="text/css" href="/css/rest.css" />    
+    
+    </head>
+    <body>
+        <h1>REST API Client</h1>  
+        <progress id="progress-bar" aria-label="Content loading…" class="htmx-indicator"></progress>
+        <div class="main">
+            <div class="input">
+                <h2>Request</h2>
+                 <form  hx-target="#output" 
+                    hx-indicator="#progress-bar"
+                    hx-include="this"
+                    id="mainform" >
+                    <label>Collection:</label>
+                    <input type="text" name="collection" value="{request.collection}">
+                    <label>URL:</label>
+                    <input type="url" name="url" required value="{request.url}">
+
+                    <label>HTTP Method:</label>
+                    <select name="method" > 
+                        <option {Verb:GET == request.verb ? 'selected' : '' }>GET</option>
+                        <option {Verb:POST == request.verb ? 'selected' : '' }>POST</option>
+                        <option {Verb:PUT == request.verb ? 'selected' : '' }>PUT</option>
+                        <option {Verb:DELETE == request.verb ? 'selected' : '' }>DELETE</option>
+                        <option {Verb:PATCH == request.verb ? 'selected' : '' }>PATCH</option>
+                    </select>
+
+                    <label>Username (Basic Auth):</label>
+                    <input type="text" name="userName" value="{request.userName}">
+
+                    <label>Password (Basic Auth):</label>
+                    <input type="password" name="password" value="{request.password}">
+
+                    <label>Request Headers (JSON):</label>
+                    <textarea name="headers" rows="5"  placeholder='Content-Type": application/json'>{request.requestHeader}</textarea>
+
+                    <label>Request Body:</label>
+                    <textarea name="body" rows="10"  placeholder='key: "value' >{request.request}</textarea>
+
+                    <button hx-post="/rest/send-request" type="submit"  hx-include="closest form">Send Request</button>
+                
+            </div>
+
+            <div class="output" id="output">
+
+                {#fragment id=request_output} 
+                 <h2>Response</h2>
+
+                <label>Status:</label>
+                <textarea name="status" rows="1" >{request.status}</textarea>
+
+                <label>Response Headers:</label>
+                <textarea name="responseHeader" >{request.responseHeader}</textarea>
+
+                <label>Response Body:</label>
+                <textarea name="response">{request.response}</textarea>
+            
+                 <button type="submit" hx-post="/rest/save-request" hx-target="#saveresponse"  hx-include="#mainform , #output" >Save Request</button>
+                  <div id="saveresponse"></div> 
+                {/fragment}
+                </form>
+            </div>
+        </div>
+    </body>
+</html>
+

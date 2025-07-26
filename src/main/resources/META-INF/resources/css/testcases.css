@@ -1,0 +1,47 @@
+ table {
+            display: table;
+            border-spacing: 1px;
+            border-collapse: separate;
+            box-sizing: border-box;
+            text-indent: 0;
+        }
+
+        th {
+            border-top: 0px;
+            border-left: 0px;
+            border-right: 0px;
+            border-block-end: 2px solid;
+
+        }
+
+
+        td {
+            padding: 0.5em;
+        }
+
+        tbody tr:nth-child(odd) {
+            background-color: #eee;
+        }
+
+        .deleteButton {
+            background-color: lightcoral;
+
+            color: whitesmoke;
+            border: 2px;
+        }
+
+        .deleteButton:hover {
+            background-color: red;
+
+        }
+
+        button {
+            font-weight: bold;
+            padding: 10%;
+            box-shadow: 2px 2px 2px lightgray;
+        }
+
+        tr.htmx-swapping td {
+            opacity: 0;
+            transition: opacity 1s ease-out;
+        }

@@ -1,0 +1,48 @@
+<html>
+
+<head>
+    <title>TestCases</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.6/dist/htmx.js"
+        integrity="sha384-ksKjJrwjL5VxqAkAZAVOPXvMkwAykMaNYegdixAESVr+KqLkKE8XBDoZuwyWVUDv"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" href="/css/testcases.css" />    
+</head>
+
+<body>
+    <h1>REST API Client - TestCases</h1>
+    <div class="main">
+        <table border="1" width="100%" cellspacing="1" cellpadding="5">
+            <thead>
+                <tr>
+                    <th>Collection</th>
+                    <th>Verb</th>
+                    <th>Uri</th>
+                    <th>Status</th>
+                    <th>Request</th>
+                    <th>Load</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+                {#for request in requests}
+                <tr>
+                    <td>{request.collection}</td>
+                    <td>{request.verb}</td>
+                    <td>{request.url}</td>
+                    <td>{request.status}</td>
+                    <td>{request.request}</td>
+                    <td><a href="/rest/{request.id}"><button>Load</button></a></td>
+                    <td><button hx-confirm="Are you sure want to delete The testcase id:{request.id}"
+                            hx-delete="/testcases/{request.id}" class="deleteButton" hx-target="closest tr"
+                            hx-swap="outerHTML swap:1s">Delete</button></td>
+                </tr>
+                {/for}
+            </tbody>
+        </table>
+
+    </div>
+</body>
+
+</html>
