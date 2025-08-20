@@ -13,9 +13,10 @@
 <body>
     <h1>REST API Client - TestCases</h1>
     <div class="main">
-        <table border="1" width="100%" cellspacing="1" cellpadding="5">
+        <table id="testcasesTable" border="1" width="98%" cellspacing="1" cellpadding="5">
             <thead>
                 <tr>
+                     <th>Id</th>
                     <th>Collection</th>
                     <th>Verb</th>
                     <th>Uri</th>
@@ -27,7 +28,8 @@
             </thead>
             <tbody>
                 {#for request in requests}
-                <tr>
+                <tr id="tc{request.id}">
+                 <td>{request.id}</td>
                     <td>{request.collection}</td>
                     <td>{request.verb}</td>
                     <td>{request.url}</td>

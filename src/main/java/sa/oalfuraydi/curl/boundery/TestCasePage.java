@@ -7,6 +7,7 @@ import io.smallrye.common.annotation.RunOnVirtualThread;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
+import jakarta.ws.rs.PATCH;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
@@ -26,22 +27,18 @@ public class TestCasePage {
     @Inject
     RestController restController;
 
-    @Blocking  
-    @RunOnVirtualThread  
+    @Blocking
+    @RunOnVirtualThread
     @GET
     @Produces(MediaType.TEXT_HTML)
     public TemplateInstance testcases() {
         return testcases
                 .data("requests", restController.getAllRequests());
     }
-
-    
-    @Blocking
-    @RunOnVirtualThread
-    @Path("{id}")
+    @Path("/{id}")
     @DELETE
-    public void deleteResttestcasebyId(@PathParam(value = "id") long id) {
-          restController.deleteRestRequestById(id);
+    public String deleteResttestcasebyId(@PathParam(value = "id") long id) {
+        return restController.deleteRestRequestById(id);
     }
 
 }

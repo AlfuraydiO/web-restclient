@@ -4,7 +4,7 @@
         <link rel="stylesheet" href="style.css" type="text/css"/>
 
         <meta charset="UTF-8">
-        <script src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.6/dist/htmx.js" integrity="sha384-ksKjJrwjL5VxqAkAZAVOPXvMkwAykMaNYegdixAESVr+KqLkKE8XBDoZuwyWVUDv" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.6/dist/htmx.js" integrity="sha384-ksKjJrwjL5VxqAkAZAVOPXvMkwAykMaNYegdixAESVr+KqLkKE8XBDoZuwyWVUDv" defer     crossorigin="anonymous"></script>
 
         <title>REST API Client</title>
          <link rel="stylesheet" type="text/css" href="/css/rest.css" />    
@@ -20,13 +20,15 @@
                     hx-indicator="#progress-bar"
                     hx-include="this"
                     id="mainform" >
-                    <label>Collection:</label>
-                    <input type="text" name="collection" value="{request.collection}">
-                    <label>URL:</label>
-                    <input type="url" name="url" required value="{request.url}">
-
-                    <label>HTTP Method:</label>
-                    <select name="method" > 
+                    <label for="collection">Collection:</label>
+                    <input id="collection" type="text" name="collection" value="{request.collection}">
+                   <div hx-target="next .error" hx-swap="innerHTML">
+                    <label for="url">URL:</label>
+                    <input id="url" type="url" hx-post="validation/url" name="url" required value="{request.url}" hx-trigger="keyup changed delay:500ms">
+                    <div  class="error"></div>
+                   </div>
+                    <label for="method">HTTP Method:</label>
+                    <select id="method" name="method" > 
                         <option {Verb:GET == request.verb ? 'selected' : '' }>GET</option>
                         <option {Verb:POST == request.verb ? 'selected' : '' }>POST</option>
                         <option {Verb:PUT == request.verb ? 'selected' : '' }>PUT</option>
@@ -34,19 +36,20 @@
                         <option {Verb:PATCH == request.verb ? 'selected' : '' }>PATCH</option>
                     </select>
 
-                    <label>Username (Basic Auth):</label>
-                    <input type="text" name="userName" value="{request.userName}">
+                    <label for="userName">Username (Basic Auth):</label>
+                    <input id="userName" type="text" name="userName" value="{request.userName}">
 
-                    <label>Password (Basic Auth):</label>
-                    <input type="password" name="password" value="{request.password}">
+                    <label for="password">Password (Basic Auth):</label>
+                    <input id="password" type="password" name="password" value="{request.password}">
+                     <div hx-target="next .error" hx-swap="innerHTML">
+                    <label for="headers">Request Headers:</label>
+                    <textarea id="headers" name="headers" hx-post="validation/headers" rows="5"  placeholder='Content-Type: application/json' hx-trigger="keyup changed delay:500ms">{request.requestHeader}</textarea>
+                    <div class="error"></div>
+                    </div>
+                    <label for="body">Request Body:</label>
+                    <textarea id="body" name="body" rows="10"  placeholder='key: "value' >{request.request}</textarea>
 
-                    <label>Request Headers (JSON):</label>
-                    <textarea name="headers" rows="5"  placeholder='Content-Type": application/json'>{request.requestHeader}</textarea>
-
-                    <label>Request Body:</label>
-                    <textarea name="body" rows="10"  placeholder='key: "value' >{request.request}</textarea>
-
-                    <button hx-post="/rest/send-request" type="submit"  hx-include="closest form">Send Request</button>
+                    <button id="sendButton" hx-post="/rest/send-request" type="submit"  hx-include="closest form" hx-disabled-elt="this">Send Request</button>
                 
             </div>
 
@@ -55,16 +58,16 @@
                 {#fragment id=request_output} 
                  <h2>Response</h2>
 
-                <label>Status:</label>
-                <textarea name="status" rows="1" >{request.status}</textarea>
+                <label for="status" >Status:</label>
+                <textarea id="status" name="status" rows="1" >{request.status}</textarea>
 
-                <label>Response Headers:</label>
-                <textarea name="responseHeader" >{request.responseHeader}</textarea>
+                <label for="responseHeader">Response Headers:</label>
+                <textarea id="responseHeader" name="responseHeader" >{request.responseHeader}</textarea>
 
-                <label>Response Body:</label>
-                <textarea name="response">{request.response}</textarea>
+                <label for="response">Response Body:</label>
+                <textarea id="response" name="response">{request.response}</textarea>
             
-                 <button type="submit" hx-post="/rest/save-request" hx-target="#saveresponse"  hx-include="#mainform , #output" >Save Request</button>
+                 <button id="savebutton" type="submit" hx-post="/rest/save-request" hx-target="#saveresponse"  hx-include="#mainform , #output" >Save Request</button>
                   <div id="saveresponse"></div> 
                 {/fragment}
                 </form>

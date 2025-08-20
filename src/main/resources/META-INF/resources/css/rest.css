@@ -55,6 +55,11 @@ button {
     box-shadow: 2px 2px 2px #72e78d;
 }
 
+button:disabled {
+    background-color: #79887c;
+    
+}
+
 button:hover {
     background-color: #0d8027;
 
@@ -88,4 +93,8 @@ h2 {
     font-size: large;
     font-weight: bold;
     display: inline;
+}
+
+.error{
+    color: red;
 }
