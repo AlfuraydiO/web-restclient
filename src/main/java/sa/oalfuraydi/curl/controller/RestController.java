@@ -7,10 +7,8 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.net.http.HttpResponse.BodyHandlers;
 import java.time.Duration;
-import java.util.Arrays;
 import java.util.Base64;
 import java.util.List;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -89,6 +87,7 @@ public class RestController {
   public RestRequest saveRequest(RestRequest request) {
     try {
       RestRequest.persist(request);
+      Log.info("------Saved Tc id: "+request.id+" -----");
     } catch (Exception e) {
       Log.errorf("Issue persisting entity %s", e);
     }
@@ -108,6 +107,7 @@ public class RestController {
   public String deleteRestRequestById(Long id) {
     try {
       boolean result = RestRequest.deleteById(id);
+        Log.info("------Saved Tc id: "+id+" -----");
       return Boolean.toString(result);
     } catch (Exception e) {
       Log.errorf("Issue deleteing By Id  %s", e);

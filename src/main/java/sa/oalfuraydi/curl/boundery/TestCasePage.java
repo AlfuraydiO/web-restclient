@@ -7,19 +7,17 @@ import io.smallrye.common.annotation.RunOnVirtualThread;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
-import jakarta.ws.rs.PATCH;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import sa.oalfuraydi.curl.controller.RestController;
-import sa.oalfuraydi.curl.entity.RestRequest;
 
 /**
  *
  * @author oalfuraydi
  */
-@Path("/testcases")
+@Path("/")
 public class TestCasePage {
 
     @Inject
@@ -35,7 +33,7 @@ public class TestCasePage {
         return testcases
                 .data("requests", restController.getAllRequests());
     }
-    @Path("/{id}")
+    @Path("/testcases/{id}")
     @DELETE
     public String deleteResttestcasebyId(@PathParam(value = "id") long id) {
         return restController.deleteRestRequestById(id);

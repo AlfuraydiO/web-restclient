@@ -19,8 +19,7 @@ import jakarta.ws.rs.core.MediaType;
 public class ValidationRestPage {
 
   static String regex = "(\n)|(:\s)";
-  @Inject
-  Template rest;
+  
 
   @POST
   @Path("url")
@@ -52,13 +51,13 @@ public class ValidationRestPage {
     try {
        HttpRequest.newBuilder().headers(headerArray);
     } catch (IllegalArgumentException e) {
-       return e.getMessage();
+       return "Malformed Headers: "+e.getMessage();
     }
     long count = Stream.of(headerArray).filter(e -> !e.isBlank()).count();
     if (count % 2 == 0) {
       return "";
     } else {
-      return "malformed headers";
+      return "Malformed headers";
     }
   }
 

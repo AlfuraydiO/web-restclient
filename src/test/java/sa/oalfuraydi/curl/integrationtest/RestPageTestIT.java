@@ -6,7 +6,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.util.regex.Pattern;
 
 import org.eclipse.microprofile.config.ConfigProvider;
-import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -24,18 +23,23 @@ import com.microsoft.playwright.Page;
 import com.microsoft.playwright.Playwright;
 import com.microsoft.playwright.options.AriaRole;
 
+import io.quarkus.test.common.QuarkusTestResource;
+import io.quarkus.test.h2.H2DatabaseTestResource;
 import io.quarkus.test.junit.QuarkusIntegrationTest;
+import io.quarkus.test.junit.TestProfile;
 
+@QuarkusTestResource(H2DatabaseTestResource.class)
 @TestInstance(Lifecycle.PER_CLASS)
 @QuarkusIntegrationTest
+@TestProfile(InMemoryTestProfile.class)
 public class RestPageTestIT {
 
   @Container
   static GenericContainer jsonContainer = new GenericContainer(DockerImageName.parse("svenwal/jsonplaceholder"))
       .withExposedPorts(3000);
 
-  // @ConfigProperty(name = "quarkus.http.test-port",defaultValue = "8083")
-  static Integer port;
+    
+    static Integer port;
 
   String restPage;
   String testcasePage;
@@ -48,13 +52,13 @@ public class RestPageTestIT {
   void setup() {
     String testDomain = "http://localhost:" + port;
     restPage = testDomain + "/rest";
-    testcasePage = testDomain + "/testcases";
+    testcasePage = testDomain + "/";
   }
 
   @BeforeAll
   static void launchBrowser() {
     port = ConfigProvider.getConfig().getValue("quarkus.http.test-port", Integer.class);
-
+    
     jsonContainer.start();
     playwright = Playwright.create();
     browser = playwright.chromium().launch();
@@ -159,9 +163,7 @@ public class RestPageTestIT {
 
     page.navigate(testcasePage);
 
-    Locator table = page.locator("#testcasesTable");
-    Locator actualrow = table.getByRole(AriaRole.ROW).filter(new Locator.FilterOptions().setHasText(testName));
-
+     Locator actualrow = page.locator("#tc"+testCaseid[1]);
     var cells = actualrow.getByRole(AriaRole.CELL).all();
 
     assertEquals(testCaseid[1], cells.get(0).textContent(), "id assert");

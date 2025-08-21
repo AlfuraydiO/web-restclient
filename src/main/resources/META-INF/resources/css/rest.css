@@ -98,3 +98,10 @@ h2 {
 .error{
     color: red;
 }
+
+.text-right {
+    display: flex;
+      justify-content: start; 
+      align-items: start; 
+       padding-left: 15px;
+}

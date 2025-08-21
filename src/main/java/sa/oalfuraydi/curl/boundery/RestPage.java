@@ -73,7 +73,7 @@ public class RestPage {
     public String saveRest(@RestForm String url, @RestForm String method, @RestForm String userName,
             @RestForm String password, @RestForm String headers, @RestForm String body, @RestForm String status,
             @RestForm String response, @RestForm String responseHeader, @RestForm String collection) {
-        Log.info("------Saved------");
+        
 
         RestRequest requestEntity = new RestRequest(Verb.valueOf(method), body, headers, url, userName, password);
         requestEntity.status = status;
@@ -84,6 +84,7 @@ public class RestPage {
             requestEntity = restController.saveRequest(requestEntity);
 
         } catch (Exception e) {
+            Log.errorf("Could not save testcase %s",e.getMessage());
             return e.getMessage();
         }
         return "TestCase Saved: id=" + requestEntity.id;
