@@ -46,8 +46,8 @@ You can build the application as a standard JAR or a native executable.
    ```bash 
    mvn verify -DskipITs=false
    ```
-    The resulting JAR will be in the `target/quarkus-app/` directory. In which you can run it using. 
+   The resulting JAR will be in the `target/quarkus-app/` directory. In which you can run it using. 
 
-    ```bash
-    java -jar target/quarkus-app/quarkus-run.jar 
-    ```
+   ```bash
+   java -jar target/quarkus-app/quarkus-run.jar
+```
