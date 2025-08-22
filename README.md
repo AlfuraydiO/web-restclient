@@ -1,6 +1,6 @@
 # Web REST Client
 
-A simple, lightweight, and modern web-based REST client built with Quarkus, htmx, and the Java HTTP Client. 
+A simple, lightweight web-based REST client built with Quarkus, htmx, and the Java HTTP Client. 
 This article sheds more light on its purpose https://oalfuraydi.sa/blog/building-a-modern-web-testing-platform-for-remote-teams .
 ## Tech Stack
 
@@ -33,21 +33,21 @@ This article sheds more light on its purpose https://oalfuraydi.sa/blog/building
     ```bash
     ./mvn quarkus:dev
     ```
-    The application will be available at `http://localhost:8080`.
+      The application will be available at `http://localhost:8080`.
 
-You can build the application as a standard JAR or a native executable.
+      You can build the application as a standard JAR or a native executable.
 
-*   **Build a standard JAR:**
-    ```bash
-    ./mvn package
-    ```
-    you can then run the intgration test usign 
+      *   **Build a standard JAR:**
+       ```bash
+       ./mvn package
+       ```
+       you can then run the intgration test usign 
 
-   ```bash 
-   mvn verify -DskipITs=false
-   ```
-   The resulting JAR will be in the `target/quarkus-app/` directory. In which you can run it using. 
+      ```bash 
+      mvn verify -DskipITs=false
+      ```
+      The resulting JAR will be in the `target/quarkus-app/` directory. In which you can run it using. 
 
-   ```bash
-   java -jar target/quarkus-app/quarkus-run.jar
-```
+      ```bash
+      java -jar target/quarkus-app/quarkus-run.jar
+      ```
